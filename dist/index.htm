@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AugE - 个人主页</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 90%;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #6C63FF, #3A34B3);
+        }
+        
+        h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2d2d2d;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: #6C63FF;
+            border-radius: 2px;
+        }
+        
+        .intro {
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 3px solid #6C63FF;
+        }
+        
+        .card h3 {
+            color: #2d2d2d;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #555;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: #6C63FF;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AugE</h1>
+        
+        <div class="intro">
+            <p>欢迎来到我的个人空间。我是一名创意开发者，专注于打造简洁而有效的数字体验。在这里，我将分享我的思考、项目和见解。</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>关于我</h3>
+                <p>热爱技术与设计交集的开发者，喜欢解决复杂问题并创造优雅的解决方案。</p>
+            </div>
+            
+            <div class="card">
+                <h3>我的技能</h3>
+                <p>前端开发、游戏设计、交互设计、用户体验优化。</p>
+            </div>
+            
+            <div class="card">
+                <h3>我的项目</h3>
+                <p>探索我最近的工作，包括网站设计、应用界面和创意编码项目。</p>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="#" class="social-link">G</a>
+            <a href="#" class="social-link">D</a>
+            <a href="#" class="social-link">B</a>
+            <a href="#" class="social-link">L</a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 AugE. 保留所有权利。</p>
+        </div>
+    </div>
+</body>
+</html>
