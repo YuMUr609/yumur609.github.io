@@ -16,27 +16,27 @@
             
             /* 浅色主题变量 */
             --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
+            --bg-secondary: rgba(255, 255, 255, 0.5); /* 50%透明度的白色 */
             --text-primary: #2d2d2d;
             --text-secondary: #555555;
-            --card-bg: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --border: rgba(0, 0, 0, 0.1);
-            --skill-bg: rgba(242, 167, 167, 0.15);
-            --intro-bg: #f9f9f9;
+            --card-bg: rgba(255, 255, 255, 0.7); /* 卡片70%透明度 */
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border: rgba(0, 0, 0, 0.15);
+            --skill-bg: rgba(242, 167, 167, 0.25);
+            --intro-bg: rgba(249, 249, 249, 0.7); /* 介绍区域70%透明度 */
         }
 
         [data-theme="dark"] {
             /* 深色主题变量 */
             --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
+            --bg-secondary: rgba(45, 45, 45, 0.5); /* 50%透明度的深色 */
             --text-primary: #f0f0f0;
             --text-secondary: #cccccc;
-            --card-bg: #2d2d2d;
-            --shadow: rgba(0, 0, 0, 0.2);
-            --border: rgba(255, 255, 255, 0.1);
-            --skill-bg: rgba(242, 167, 167, 0.2);
-            --intro-bg: #333333;
+            --card-bg: rgba(45, 45, 45, 0.7); /* 卡片70%透明度 */
+            --shadow: rgba(0, 0, 0, 0.3);
+            --border: rgba(255, 255, 255, 0.15);
+            --skill-bg: rgba(242, 167, 167, 0.3);
+            --intro-bg: rgba(51, 51, 51, 0.7); /* 介绍区域70%透明度 */
         }
         
         * {
@@ -50,7 +50,7 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background: var(--bg-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -65,7 +65,7 @@
         .bg-shape {
             position: fixed;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.6;
             transition: all 1s ease;
             pointer-events: none;
         }
@@ -138,7 +138,7 @@
         
         /* 调整深色模式下的背景图形 */
         [data-theme="dark"] .bg-shape {
-            opacity: 0.15;
+            opacity: 0.25;
         }
         
         .container {
@@ -146,17 +146,15 @@
             width: 100%;
             margin: 0 auto;
             padding: 3rem;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--bg-secondary); /* 使用50%透明度的背景 */
             border-radius: 16px;
             box-shadow: 0 15px 35px var(--shadow);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px); /* 增强磨砂效果 */
+            -webkit-backdrop-filter: blur(15px); /* Safari支持 */
+            border: 1px solid var(--border);
             transition: all 0.5s ease;
-        }
-        
-        [data-theme="dark"] .container {
-            background: rgba(45, 45, 45, 0.9);
         }
         
         .container::before {
@@ -186,6 +184,8 @@
             box-shadow: 0 2px 8px var(--shadow);
             z-index: 10;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .theme-toggle:hover {
@@ -238,6 +238,8 @@
             box-shadow: 0 5px 15px rgba(242, 167, 167, 0.3);
             transition: all 0.5s ease;
             animation: pulse 4s ease-in-out infinite;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         @keyframes pulse {
@@ -253,34 +255,33 @@
         
         .title-container {
             position: relative;
-            padding-bottom: 1rem; /* 为下划线提供空间 */
+            padding-bottom: 1rem;
         }
         
         .title-container h1 {
             font-weight: 700;
             font-size: 2.5rem;
             color: var(--text-primary);
-            margin-bottom: 0.5rem; /* 增加与tagline的间距 */
+            margin-bottom: 0.5rem;
             position: relative;
             display: inline-block;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
-        /* 修复下划线问题 */
         .title-container h1::after {
             content: '';
             position: absolute;
-            bottom: -10px; /* 调整下划线位置 */
+            bottom: -10px;
             left: 0;
-            width: 100%; /* 与文字等宽 */
+            width: 100%;
             height: 3px;
             background: var(--haitianxia);
             border-radius: 2px;
             transition: width 0.5s ease;
         }
         
-        /* 移除原有的悬停效果，因为现在宽度已经是100% */
         .title-container h1:hover::after {
-            width: 100%; /* 保持100%宽度 */
+            width: 100%;
         }
         
         .tagline {
@@ -289,8 +290,9 @@
             font-size: 1.1rem;
             opacity: 0;
             animation: fadeIn 1s ease forwards 0.5s;
-            margin-top: 1rem; /* 增加与下划线的间距 */
+            margin-top: 1rem;
             display: block;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .intro {
@@ -305,6 +307,9 @@
             opacity: 0;
             transform: translateY(20px);
             animation: slideUp 0.8s ease forwards 0.7s;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px var(--shadow);
         }
         
         .grid {
@@ -325,6 +330,8 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(20px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .card:nth-child(1) {
@@ -367,6 +374,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .card h3 i {
@@ -394,6 +402,8 @@
             margin: 0.3rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .skills-list li:hover {
@@ -425,6 +435,8 @@
             position: relative;
             overflow: hidden;
             border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .social-link:hover {
