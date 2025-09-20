@@ -5,37 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AugE - 个人主页</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            /* 海天霞色调 */
+            --haitianxia-light: #F5D7D0;
+            --haitianxia: #F2A7A7;
+            --haitianxia-dark: #D98282;
+            --haitianxia-darker: #BF6B6B;
+            
+            /* 浅色主题变量 */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d2d2d;
+            --text-secondary: #555555;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --border: rgba(0, 0, 0, 0.1);
+            --skill-bg: rgba(242, 167, 167, 0.15);
+            --intro-bg: #f9f9f9;
+        }
+
+        [data-theme="dark"] {
+            /* 深色主题变量 */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --card-bg: #2d2d2d;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --border: rgba(255, 255, 255, 0.1);
+            --skill-bg: rgba(242, 167, 167, 0.2);
+            --intro-bg: #333333;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-            padding: 0;
-            margin: 0;
+            color: var(--text-primary);
+            background: var(--bg-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 背景图形元素 */
+        .bg-shape {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.5;
+            transition: all 1s ease;
+            pointer-events: none;
+        }
+        
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--haitianxia-light), transparent);
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            bottom: 15%;
+            right: 5%;
+            width: 200px;
+            height: 200px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: linear-gradient(135deg, var(--haitianxia), transparent);
+            animation: float 12s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            top: 40%;
+            right: 15%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(225deg, var(--haitianxia-dark), transparent);
+            animation: float 18s ease-in-out infinite 2s;
+        }
+        
+        .shape-4 {
+            bottom: 25%;
+            left: 15%;
+            width: 100px;
+            height: 100px;
+            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+            background: linear-gradient(315deg, var(--haitianxia-light), transparent);
+            animation: float 10s ease-in-out infinite reverse 1s;
+        }
+        
+        .shape-5 {
+            top: 20%;
+            right: 25%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--haitianxia), transparent);
+            animation: float 14s ease-in-out infinite 0.5s;
+        }
+        
+        /* 背景图形动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(0) rotate(10deg);
+            }
+            75% {
+                transform: translateY(20px) rotate(5deg);
+            }
+        }
+        
+        /* 调整深色模式下的背景图形 */
+        [data-theme="dark"] .bg-shape {
+            opacity: 0.15;
         }
         
         .container {
-            max-width: 900px;
-            width: 90%;
-            margin: 2rem auto;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
             padding: 3rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px var(--shadow);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+        }
+        
+        [data-theme="dark"] .container {
+            background: rgba(45, 45, 45, 0.9);
         }
         
         .container::before {
@@ -45,151 +166,474 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, #6C63FF, #3A34B3);
+            background: linear-gradient(90deg, var(--haitianxia), var(--haitianxia-dark));
         }
         
-        h1 {
+        /* 更低调的明暗切换按钮 */
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px var(--shadow);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.05) rotate(45deg);
+            box-shadow: 0 4px 12px var(--shadow);
+            border-color: var(--haitianxia);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--haitianxia);
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .theme-toggle i.fa-sun {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle i.fa-moon {
+            display: block;
+        }
+        
+        .theme-toggle i.fa-moon {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle i.fa-sun {
+            display: none;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            gap: 1.5rem;
+            position: relative;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--haitianxia), var(--haitianxia-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
             font-weight: 600;
+            box-shadow: 0 5px 15px rgba(242, 167, 167, 0.3);
+            transition: all 0.5s ease;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(242, 167, 167, 0.3);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 8px 20px rgba(242, 167, 167, 0.4);
+            }
+        }
+        
+        .title-container {
+            position: relative;
+            padding-bottom: 1rem; /* 为下划线提供空间 */
+        }
+        
+        .title-container h1 {
+            font-weight: 700;
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #2d2d2d;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem; /* 增加与tagline的间距 */
             position: relative;
             display: inline-block;
         }
         
-        h1::after {
+        /* 修复下划线问题 */
+        .title-container h1::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -10px; /* 调整下划线位置 */
             left: 0;
-            width: 50px;
-            height: 4px;
-            background: #6C63FF;
+            width: 100%; /* 与文字等宽 */
+            height: 3px;
+            background: var(--haitianxia);
             border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        
+        /* 移除原有的悬停效果，因为现在宽度已经是100% */
+        .title-container h1:hover::after {
+            width: 100%; /* 保持100%宽度 */
+        }
+        
+        .tagline {
+            color: var(--haitianxia-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
+            margin-top: 1rem; /* 增加与下划线的间距 */
+            display: block;
         }
         
         .intro {
             margin-bottom: 2.5rem;
             font-size: 1.1rem;
-            color: #555;
+            color: var(--text-secondary);
             line-height: 1.8;
+            padding: 1.5rem;
+            background: var(--intro-bg);
+            border-radius: 12px;
+            border-left: 4px solid var(--haitianxia);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards 0.7s;
         }
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
             margin-top: 2rem;
         }
         
         .card {
-            background: #f9f9f9;
-            padding: 1.5rem;
-            border-radius: 8px;
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 12px;
             transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            box-shadow: 0 5px 20px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:nth-child(1) {
+            animation: slideUp 0.8s ease forwards 0.9s;
+        }
+        
+        .card:nth-child(2) {
+            animation: slideUp 0.8s ease forwards 1.1s;
+        }
+        
+        .card:nth-child(3) {
+            animation: slideUp 0.8s ease forwards 1.3s;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--haitianxia), var(--haitianxia-dark));
+            transition: height 0.5s ease;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 3px solid #6C63FF;
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px var(--shadow);
+        }
+        
+        .card:hover::before {
+            height: 100%;
         }
         
         .card h3 {
-            color: #2d2d2d;
-            margin-bottom: 0.8rem;
-            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h3 i {
+            color: var(--haitianxia);
         }
         
         .card p {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .skills-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .skills-list li {
+            display: inline-block;
+            background: var(--skill-bg);
+            color: var(--haitianxia-darker);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 0.3rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .skills-list li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 8px rgba(242, 167, 167, 0.2);
         }
         
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 1.2rem;
+            margin-top: 3rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.5s;
         }
         
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: #f2f2f2;
+            background: var(--card-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            color: #555;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--text-primary);
             text-decoration: none;
+            box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
         }
         
         .social-link:hover {
-            background: #6C63FF;
+            transform: translateY(-5px) scale(1.1);
             color: white;
-            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(242, 167, 167, 0.3);
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--haitianxia), var(--haitianxia-dark));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+        
+        .social-link:hover::before {
+            opacity: 1;
+        }
+        
+        .social-link i {
+            position: relative;
+            z-index: 1;
+            font-size: 1.2rem;
         }
         
         .footer {
-            margin-top: 3rem;
+            margin-top: 4rem;
             text-align: center;
-            color: #888;
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.7s;
         }
         
         @media (max-width: 768px) {
             .container {
                 padding: 2rem;
-                width: 95%;
             }
             
-            h1 {
-                font-size: 2rem;
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .title-container h1 {
+                font-size: 2.2rem;
             }
             
             .grid {
                 grid-template-columns: 1fr;
             }
+            
+            .intro {
+                padding: 1.2rem;
+            }
+            
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .bg-shape {
+                display: none;
+            }
+        }
+        
+        /* 动画关键帧 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            animation: fadeIn 1s ease-out;
         }
     </style>
 </head>
 <body>
+    <!-- 背景图形 -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+    <div class="bg-shape shape-4"></div>
+    <div class="bg-shape shape-5"></div>
+
     <div class="container">
-        <h1>AugE</h1>
+        <div class="theme-toggle" id="theme-toggle" title="切换主题">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+        </div>
+        
+        <div class="header">
+            <div class="avatar">A</div>
+            <div class="title-container">
+                <h1>AugE</h1>
+                <div class="tagline">创意开发者 & 游戏设计师</div>
+            </div>
+        </div>
         
         <div class="intro">
-            <p>欢迎来到我的个人空间。我是一名创意开发者，专注于打造简洁而有效的数字体验。在这里，我将分享我的思考、项目和见解。</p>
+            <p>欢迎来到我的个人空间。我是一名创意开发者，专注于打造简洁而有效的数字体验。热爱技术与设计的交集，喜欢通过代码创造优雅的解决方案。在这里，我将分享我的思考、项目和见解。</p>
         </div>
         
         <div class="grid">
             <div class="card">
-                <h3>关于我</h3>
-                <p>热爱技术与设计交集的开发者，喜欢解决复杂问题并创造优雅的解决方案。</p>
+                <h3><i class="fas fa-user"></i> 关于我</h3>
+                <p>热爱技术与设计交集的开发者，喜欢解决复杂问题并创造优雅的解决方案。我相信好的设计是形式与功能的完美结合。</p>
             </div>
             
             <div class="card">
-                <h3>我的技能</h3>
+                <h3><i class="fas fa-code"></i> 我的技能</h3>
                 <p>前端开发、游戏设计、交互设计、用户体验优化。</p>
+                <ul class="skills-list">
+                    <li>HTML/CSS</li>
+                    <li>JavaScript</li>
+                    <li>Unity</li>
+                    <li>UI/UX设计</li>
+                    <li>响应式设计</li>
+                </ul>
             </div>
             
             <div class="card">
-                <h3>我的项目</h3>
-                <p>探索我最近的工作，包括网站设计、应用界面和创意编码项目。</p>
+                <h3><i class="fas fa-briefcase"></i> 我的项目</h3>
+                <p>探索我最近的工作，包括网站设计、应用界面和创意编码项目。每个项目都是学习与创造的过程。</p>
             </div>
         </div>
         
         <div class="social-links">
-            <a href="#" class="social-link">G</a>
-            <a href="#" class="social-link">D</a>
-            <a href="https://space.bilibili.com/3493075997428259" class="social-link">B</a>
-            <a href="#" class="social-link">L</a>
+            <a href="#" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://space.bilibili.com/3493075997428259" class="social-link" title="Bilibili">
+                <i class="fab fa-bilibili"></i>
+            </a>
+            <a href="#" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
         </div>
         
         <div class="footer">
             <p>© 2025 AugE. 保留所有权利。</p>
         </div>
     </div>
+
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // 检查本地存储中的主题偏好
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+        } else {
+            // 检查系统偏好
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                body.setAttribute('data-theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+            }
+        }
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // 添加鼠标移动视差效果
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.bg-shape');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.01 + (index * 0.01);
+                const xOffset = (x - 0.5) * speed * 100;
+                const yOffset = (y - 0.5) * speed * 100;
+                
+                shape.style.transform = `translate(${xOffset}px, ${yOffset}px) ${getComputedStyle(shape).transform}`;
+            });
+        });
+    </script>
 </body>
 </html>
